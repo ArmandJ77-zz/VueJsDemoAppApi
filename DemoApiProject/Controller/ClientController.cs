@@ -6,6 +6,7 @@ using DemoApiProject.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace DemoApiProject.Controller
 {
@@ -23,7 +24,7 @@ namespace DemoApiProject.Controller
         public async Task<JsonResult> GetPaginated(int? page, int pageSize) => new JsonResult(await PaginatedList<Client>.CreateAsync(Context.Clients.AsNoTracking(), page ?? 1, pageSize));
 
         [HttpPost]
-        public async Task<JsonResult> Create(Client clientDto)
+        public async Task<JsonResult> Create([FromBody] Client clientDto)
         {
             try
             {
@@ -64,7 +65,5 @@ namespace DemoApiProject.Controller
                 return new JsonResult(HttpStatusCode.InternalServerError);
             }
         }
-
-
     }
 }
